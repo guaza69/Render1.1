@@ -26,17 +26,18 @@ El flujo de datos se gestiona a través de un Gateway centralizado que enruta la
 
 ```mermaid
 graph TD
-    Client[Cliente / Frontend] -->|HTTP Request| Gateway[API Gateway (main.py)]
+    Client[Cliente / Frontend] -->|HTTP Request| Gateway[API Gateway main.py]
     
-    subgraph "Application Layer"
+    subgraph Application_Layer
         Gateway -->|/users| UserRouter[Users Service]
         Gateway -->|/products| ProdRouter[Products Service]
     end
     
-    subgraph "Data Layer (Simulation)"
+    subgraph Data_Layer
         UserRouter --> UserDB[(In-Memory Users DB)]
         ProdRouter --> ProdDB[(In-Memory Products DB)]
     end
     
-    classDef service fill:#f9f,stroke:#333,stroke-width:2px;
-    class UserRouter,ProdRouter service;
+    style Gateway fill:#f9f,stroke:#333,stroke-width:2px
+    style UserRouter fill:#bbf,stroke:#333,stroke-width:2px
+    style ProdRouter fill:#bbf,stroke:#333,stroke-width:2px
