@@ -40,18 +40,6 @@ Para evitar conflictos de compatibilidad detectados con versiones inestables (3.
 
 ##  REPOSITORY STRUCTURE
 
-La estructura sigue el estándar de "Flat Layout" optimizado para descubrimiento de paquetes en Python:
-
-```text
-/ (root)
-├── main.py            # API Gateway & Entrypoint (Inicia Uvicorn)
-├── requirements.txt   # Dependencias con versiones pineadas (Lockfile)
-├── README.md          # Documentación técnica
-└── routers/           # Paquete de Microservicios
-    ├── __init__.py    # Inicializador del módulo
-    ├── users.py       # Lógica de dominio: Gestión de Usuarios (CRUD)
-    └── products.py    # Lógica de dominio: Catálogo de Productos
-
  # 1. Clonar repositorio
 git clone [https://github.com/guaza69/Render1.1.git](https://github.com/guaza69/Render1.1.git)
 
@@ -86,7 +74,7 @@ El proyecto demuestra la implementación de prácticas avanzadas de ingeniería 
 
 ---
 
-## 🛠️ ENGINEERING DECISIONS & UPDATES
+##  ENGINEERING DECISIONS & UPDATES
 
 Durante el ciclo de desarrollo (SDLC), se implementaron refactorizaciones críticas para garantizar la estabilidad y escalabilidad:
 
@@ -105,7 +93,7 @@ Para evitar conflictos de compatibilidad detectados con versiones inestables (3.
 
 ---
 
-## 🏗️ REPOSITORY STRUCTURE
+##  REPOSITORY STRUCTURE
 
 La estructura sigue el estándar de "Flat Layout" optimizado para descubrimiento de paquetes en Python:
 
@@ -118,17 +106,4 @@ La estructura sigue el estándar de "Flat Layout" optimizado para descubrimiento
     ├── __init__.py    # Inicializador del módulo
     ├── users.py       # Lógica de dominio: Gestión de Usuarios (CRUD)
     └── products.py    # Lógica de dominio: Catálogo de Productos
-🚀 DEPLOYMENT PIPELINEEl despliegue en Render está configurado para ser resiliente:Environment Check: Se valida la variable PYTHON_VERSION = 3.11.9.Dependency Resolution: Instalación limpia desde requirements.txt (FastAPI >= 0.110.0).Module Discovery: Ejecución de Uvicorn desde la raíz para asegurar que los imports de routers sean reconocidos correctamente.📡 API ENDPOINTSLa documentación interactiva (Swagger UI) está disponible en /docs. Los servicios están segregados por prefijos:ServicioMétodoEndpointDescripción TécnicaGatewayGET/Health Check del sistema global.UsersGET/users/Retorna lista de usuarios desde memoria.UsersPOST/users/Crea usuario con validación de Email y UUID autogenerado.ProductsGET/products/Consulta catálogo de productos (Read-Only).ProductsGET/products/{id}Búsqueda indexada por ID de producto.⚙️ LOCAL INSTALLATIONPara replicar el entorno de producción localmente:Bash# 1. Clonar repositorio
-git clone [https://github.com/guaza69/Render1.1.git](https://github.com/guaza69/Render1.1.git)
 
-# 2. Crear entorno virtual
-python -m venv .venv
-.\.venv\Scripts\Activate  # Windows
-
-# 3. Instalar dependencias
-pip install -r requirements.txt
-
-# 4. Ejecutar servidor (Desde la raíz)
-python -m uvicorn main:app --reload
-
-<div align="center"><sub>Desarrollado por José Julián Guaza Botero | Backend Architecture</sub></div>
