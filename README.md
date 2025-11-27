@@ -1,49 +1,42 @@
+<div align="center">
+
 ![Python](https://img.shields.io/badge/PYTHON-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FASTAPI-MODULAR-009688?style=for-the-badge&logo=fastapi&logoColor=white)
 ![Architecture](https://img.shields.io/badge/ARCH-MICROSERVICES-orange?style=for-the-badge&logo=serverless&logoColor=white)
 ![Render](https://img.shields.io/badge/DEPLOY-RENDER-46E3B7?style=for-the-badge&logo=render&logoColor=black)
+![License](https://img.shields.io/badge/LICENSE-MIT-green?style=for-the-badge)
 
-
-<div align="center">
-##  PROJECT OVERVIEW
-
-Este repositorio aloja una **API RESTful de grado empresarial** diseñada bajo el patrón de arquitectura de **Microservicios Modulares**. A diferencia de una aplicación monolítica tradicional, este sistema desacopla la lógica de negocio en dominios independientes (*Usuarios* y *Productos*), orquestados por un Gateway central.
-
-El proyecto demuestra la implementación de prácticas avanzadas de ingeniería de software, incluyendo validación estricta de datos (Type Safety), gestión de dependencias moderna y despliegue automatizado en infraestructura PaaS.
-
----
-
-##  ENGINEERING DECISIONS & UPDATES
-
-Durante el ciclo de desarrollo (SDLC), se implementaron refactorizaciones críticas para garantizar la estabilidad y escalabilidad:
-
-### 1. Arquitectura de Enrutamiento (`APIRouter`)
-Se migró de un archivo `main.py` monolítico a una estructura distribuida utilizando `APIRouter`.
-* **Beneficio:** Permite que equipos independientes trabajen en el módulo de `Users` sin romper el módulo de `Products`.
-* **Implementación:** El `main.py` actúa únicamente como **Entrypoint/Gateway**, inyectando las rutas al iniciar la aplicación.
-
-### 2. Migración a Pydantic V2
-El sistema utiliza la última versión del motor de validación de datos **Pydantic**.
-* **Actualización:** Se reemplazó el obsoleto `.dict()` por el moderno y eficiente serializador `.model_dump()`.
-* **Validación:** Se integró `pydantic[email]` para asegurar la integridad de los datos de contacto a nivel de esquema.
-
-### 3. Estabilidad del Runtime (Python 3.11)
-Para evitar conflictos de compatibilidad detectados con versiones inestables (3.13+), se forzó el entorno de producción a **Python 3.11.9**. Esto asegura que todas las librerías asíncronas (`uvicorn`, `anyio`) funcionen sin errores de *ForwardRef*.
-
----
-
-##  REPOSITORY STRUCTURE
-
-La estructura sigue el estándar de "Flat Layout" optimizado para descubrimiento de paquetes en Python:
-
-```text
-/ (root)
-├── main.py            # API Gateway & Entrypoint (Inicia Uvicorn)
-├── requirements.txt   # Dependencias con versiones pineadas (Lockfile)
-├── README.md          # Documentación técnica
-└── routers/           # Paquete de Microservicios
-    ├── __init__.py    # Inicializador del módulo
-    ├── users.py       # Lógica de dominio: Gestión de Usuarios (CRUD)
-    └── products.py    # Lógica de dominio: Catálogo de Productos
+# ENTERPRISE MICROSERVICES API
+### Arquitectura Modular, Escalable y Despliegue Continuo (CI/CD)
 </div>
 
+---
+
+## PROJECT OVERVIEW
+
+Este repositorio aloja una implementación de referencia de una **API RESTful** diseñada bajo patrones de arquitectura de software modernos. A diferencia de las aplicaciones monolíticas tradicionales, este sistema implementa una **Arquitectura de Microservicios Modulares**, desacoplando la lógica de negocio en dominios independientes (*Usuarios* y *Productos*) orquestados por un API Gateway central.
+
+**Objetivo del Proyecto:** Demostrar la capacidad de ingeniería para construir sistemas backend escalables, tipados estáticamente y desplegados automáticamente en infraestructura PaaS.
+
+---
+
+## SYSTEM ARCHITECTURE
+
+El flujo de datos se gestiona a través de un Gateway centralizado que enruta las peticiones a los servicios correspondientes, manteniendo la separación de responsabilidades (SoC).
+
+```mermaid
+graph TD
+    Client[Cliente / Frontend] -->|HTTP Request| Gateway[API Gateway (main.py)]
+    
+    subgraph "Application Layer"
+        Gateway -->|/users| UserRouter[Users Service]
+        Gateway -->|/products| ProdRouter[Products Service]
+    end
+    
+    subgraph "Data Layer (Simulation)"
+        UserRouter --> UserDB[(In-Memory Users DB)]
+        ProdRouter --> ProdDB[(In-Memory Products DB)]
+    end
+    
+    classDef service fill:#f9f,stroke:#333,stroke-width:2px;
+    class UserRouter,ProdRouter service;
